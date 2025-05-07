@@ -10,7 +10,7 @@ app.use(express.json());
 
 
 app.post('/api', (_req,res)=>{
-    res.status(200).json({rec:res.locals.ai})
+    res.status(200).json({ rec: res.locals.ai })
 } )
 
 app.use((err:any, req: Request, res: Response, _next: NextFunction): void => {
