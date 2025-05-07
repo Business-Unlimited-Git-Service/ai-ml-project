@@ -35,8 +35,8 @@ const UserInput = () => {
             const parsedResponse: ParsedResponse = await response.json();
             setOutput(parsedResponse.newPokemon);
           }
-        } catch (_err) {
-          setError('Error creating Pokemon', _err);
+        } catch (error) {
+          setError(error as string);
         } finally {
           setLoading(false);
         }
