@@ -18,6 +18,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@pinecone-database/pinecone": "^5.1.2",
     "@types/cors": "^2.8.17",
     "@types/node": "^22.15.15",
     "cors": "^2.8.5",
