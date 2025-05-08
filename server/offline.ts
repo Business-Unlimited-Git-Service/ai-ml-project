@@ -209,6 +209,8 @@ const results = async () => {
     const res: any = fileContents + ',';
     console.log('res:', res)
     fs.writeFile(path.resolve(__dirname, 'embeddings.jsonl'), res, "utf-8");
+
+    const lines = text.trim().split("\n").map(line => JSON.parse(line));
 }    
 
 results();
