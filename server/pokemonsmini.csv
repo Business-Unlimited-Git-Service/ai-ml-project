@@ -1,0 +1,5 @@
+national_number,gen,name,primary_type,secondary_type,classification,height_m,weight_kg,abilities,description
+1,I,Bulbasaur,grass,poison,Seed Pokémon,0.7,6.9,Overgrow,There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.
+2,I,Ivysaur,grass,poison,Seed Pokémon,1,13,Overgrow,"When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs."
+3,I,Venusaur,grass,poison,Seed Pokémon,2,100,Overgrow,Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.
+4,I,Charmander,fire,,Lizard Pokémon,0.6,8.5,Blaze,"It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail."
