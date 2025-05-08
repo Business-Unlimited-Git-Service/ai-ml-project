@@ -46,16 +46,13 @@ const UserInput = () => {
     return (
         <div style={{ padding: '20px' }}>
         <form onSubmit={handleSubmit}>
-          <label>
-            I want my pokemon to be:
             <input
               type="text"
               value={userQuery}
               onChange={(e) => setUserQuery(e.target.value)}
-              placeholder="Enter pokemon parameters"
+              placeholder="What form does your pokemon take?"
               style={{ width: '100%', padding: '8px', marginTop: '8px' }}
             />
-          </label>
           <button type="submit" style={{ marginTop: '16px' }} disabled={loading}>
             {loading ? 'Loading...' : 'Get Pokemon'}
           </button>

@@ -1,21 +1,58 @@
 /* General Reset */
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-  }
+    font-family: "Press Start 2P", system-ui;
+
+  } */
   
   /* Dark Mode Background */
   body {
+    align-items: center;
     text-align: center;
-    background-color: rgb(27, 60, 65);
-    color: rgb(4, 140, 148);
-    line-height: 1.6;
+    background-color: #1b8ad9;
+    color: #ffde00;
+    line-height: 2;
     padding: 20px;
     min-height: 100vh;
   }
+
+  .pokemonGeneratorTitle {
+    text-align: center;
+    display: inline;
+    padding: 5px 15px;
+    border-radius: 15px;
+    background-color: #cc0000;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 5rem;
+    font-style: bold;
+  }
+
+  .pokemonGeneratorTitle:hover {
+    background-color: #3b4cca;
+    color: #ffde00;
+    box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
+    transform: translateY(-2px);
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    cursor: grab;
+    padding: 0 5px;
+    
+  }
   
+.instructions {
+  text-align: center;
+  display: inline;
+  padding: 5px 30px;
+  border-radius: 30px;
+  background-color: #3b4cca;
+  color: #ffde00;
+  font-family: "Press Start 2P", system-ui;
+  font-style: normal;
+}
+
   /* Container Styles */
   .container {
     max-width: 1200px;
@@ -27,13 +64,16 @@
     box-shadow: 0 4px 20px rgb(195, 143, 64);
     overflow: hidden;
     color: #a8d0e6;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 200;
+    font-style: normal;
   }
   
   /* Form Styles */
   form {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    gap: 20px;
   }
   
   textarea {
@@ -45,6 +85,8 @@
     font-size: 1rem;
     resize: vertical;
     outline: none;
+    font-family: "Press Start 2P", system-ui;
+    font-style: normal;
   }
   
   textarea::placeholder {
@@ -52,20 +94,37 @@
   }
   
   button {
-    background-color: #1c2d50;
-    color: rgb(4, 140, 148);
+    display: inline;
+    padding: 5px 15px;
+    border-radius: 15px;
+    background-color: #cc0000;
+    color: #ffde00;
     border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
+    font-size: 3rem;
+    cursor: grabbing;
     transition: transform 0.2s;
+    font-family: "Press Start 2P", system-ui;
+    font-style: normal;
+    text-align: center;
+    
   }
   
   button:hover {
-    background-color: rgb(195, 143, 64);
+    background-color: #3b4cca;
+    color: #ffde00;
+    box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
     transform: translateY(-2px);
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    cursor: grab;
     
+  }
+
+  .press-start-2p-regular {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
   }
   
   button:disabled {
@@ -75,9 +134,10 @@
   
   /* Error Message */
   .error {
-    color: #ff4d4f;
+    color: #ff0000;
     font-weight: bold;
     margin-top: 10px;
+    font-family: "Press Start 2P", system-ui;
   }
   
   /* Result Section */
@@ -87,10 +147,16 @@
     background-color: #111722;
     border-left: 5px solid rgb(4, 140, 148);
     border-radius: 5px;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
   }
   
   .result h2 {
     color: #63a4ff;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
   }
   
   pre {
@@ -118,6 +184,9 @@
     padding: 12px 15px;
     text-align: left;
     border: 1px solid #1f2c3e;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
   }
   
   th {
@@ -142,6 +211,9 @@
     textarea {
       font-size: 0.9rem;
       padding: 10px;
+      font-family: "Press Start 2P", system-ui;
+      font-weight: 400;
+      font-style: normal;
     }
   
     button {
