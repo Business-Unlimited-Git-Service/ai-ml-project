@@ -2,6 +2,7 @@
 //get csv file of pokemon pokedex (whichever one)
 //look at that data and make an openaiQuery to make a json file out of that pokemon data using chatgpt 4.1 and chat.responses/chat.completions api
 import fs from 'fs/promises';
+import fsNormal from 'fs'
 import dotenv from 'dotenv';
 import Openai from 'openai';
 import path from 'path';
@@ -83,7 +84,7 @@ Pros: better Pinecone score for embeddings
 
 async function getpkmnJSONFile() {
 
-    const pokemons = await fs.readFile(path.resolve(__dirname, 'pokemons.csv'), 'utf-8');
+    const pokemons = await fs.readFile(path.resolve(__dirname, 'pokemonsmini.csv'), 'utf-8');
     const pokemonsArray = pokemons.split('\n');
     const chunkSize = 100;
     for (let i = 0; i < pokemonsArray.length; i += chunkSize) {
@@ -108,13 +109,110 @@ async function getpkmnJSONFile() {
       }
     
     // await fs.appendFile(path.resolve(__dirname, 'response.json'), JSON.stringify(dbResponse, null, 2) + "\n", "utf-8");
-    await fs.appendFile(path.resolve(__dirname, 'response.json'), dbResponse.AIResponse, "utf-8");
+    await fs.appendFile(path.resolve(__dirname, 'response.jsonl'), dbResponse.AIResponse, "utf-8");
+    }
 }
-}
-getpkmnJSONFile()
+// getpkmnJSONFile()
+
+
+
+
 //function 2: 
 //take that json file
 //and make batch query using openai batch api to obtain embeddings (text-embedding-3-small)
+// async function batch
+async function uploadFile(){
+    try {
+        const file = await client.files.create({
+          file: fsNormal.createReadStream("miniresponse.jsonl"),
+          purpose: "batch",
+        });
+        console.log("File uploaded successfully in uploadFile")
+        console.log("file:", file)
+    } catch (error) {
+        console.error("Embedding error", error);
+    }
+}
+// uploadFile()
+// file: {
+//     object: 'file',
+//     id: 'file-QQPWqahEPfmz9mx3kVocnE',
+//     purpose: 'batch',
+//     filename: 'miniresponse.jsonl',
+//     bytes: 1191,
+//     created_at: 1746733130,
+//     expires_at: null,
+//     status: 'processed',
+//     status_details: null
+//   }
+
+
+async function getEmbeddings(){
+    try {
+        const createBatches = await client.batches.create({
+          input_file_id:'file-QQPWqahEPfmz9mx3kVocnE',
+          endpoint:"/v1/embeddings",
+          completion_window:"24h"
+    });
+    console.log(createBatches)
+        console.log("createBatches created successfully")
+    } catch (error) {
+        console.error("Embedding error", error);
+}
+}
+// {
+//     id: 'batch_681d09f25cc08190917b983473edb1be',
+//     object: 'batch',
+//     endpoint: '/v1/embeddings',
+//     errors: null,
+//     input_file_id: 'file-QQPWqahEPfmz9mx3kVocnE',
+//     completion_window: '24h',
+//     status: 'validating',
+//     output_file_id: null,
+//     error_file_id: null,
+//     created_at: 1746733554,
+//     in_progress_at: null,
+//     expires_at: 1746819954,
+//     finalizing_at: null,
+//     completed_at: null,
+//     failed_at: null,
+//     expired_at: null,
+//     cancelling_at: null,
+//     cancelled_at: null,
+//     request_counts: { total: 0, completed: 0, failed: 0 },
+//     metadata: null
+//   }
+
+    // getEmbeddings()
+
+    // const embedding = await openAIClient.embeddings.create({
+    //     model: 'text-embedding-3-small',
+    //     input: `${userQuery}`,
+    //     encoding_format: 'float',
+    //   });
+    //   res.locals.embedding = embedding.data[0].embedding;
+
+    async function getStatus() {
+        const batch = await client.batches.retrieve('batch_681d09f25cc08190917b983473edb1be');
+        console.log(batch);
+
+    }
+
+// getStatus()
+
+const results = async () => {
+    const resultsArray = [];
+    // output file goes as parameter of content('output file')
+    const fileResponse = await client.files.content('file-YEHL8M3heHkFk4f2TgewEg');
+    const fileContents = await fileResponse.text();
+    console.log('fileContents:', fileContents);
+    const res: any = fileContents + ',';
+    console.log('res:', res)
+    fs.writeFile(path.resolve(__dirname, 'embeddings.jsonl'), res, "utf-8");
+}    
+
+results();
+
 
 
 //function 3:
