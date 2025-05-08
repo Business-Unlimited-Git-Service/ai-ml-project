@@ -128,7 +128,7 @@ async function uploadFile(){
           purpose: "batch",
         });
         console.log("File uploaded successfully in uploadFile")
-        console.log("file:", file)
+        // console.log("file:", file)
     } catch (error) {
         console.error("Embedding error", error);
     }
@@ -194,7 +194,7 @@ async function getEmbeddings(){
 
     async function getStatus() {
         const batch = await client.batches.retrieve('batch_681d09f25cc08190917b983473edb1be');
-        console.log(batch);
+        // console.log(batch);
 
     }
 
@@ -205,17 +205,44 @@ const results = async () => {
     // output file goes as parameter of content('output file')
     const fileResponse = await client.files.content('file-YEHL8M3heHkFk4f2TgewEg');
     const fileContents = await fileResponse.text();
-    console.log('fileContents:', fileContents);
-    const res: any = fileContents + ',';
-    console.log('res:', res)
-    fs.writeFile(path.resolve(__dirname, 'embeddings.jsonl'), res, "utf-8");
+    // console.log('fileContents:', fileContents);
+    const res: any = fileContents 
 
-    const lines = text.trim().split("\n").map(line => JSON.parse(line));
+// const test =`{test1:potato}
+// {test2:tomato}
+// {test3:onion}`
+
+    // const embeeding = await fs.readFile(path.resolve(__dirname, 'embeddings.json'), "utf-8");
+        
+    // console.log(Array.isArray(embeeding)); 
+
+    const lines = res.trim().split("\n");
+    // const lines = res.split("\n");
+    
+    await fs.writeFile(path.resolve(__dirname, 'embeddings.json'), JSON.stringify(lines), "utf-8");
+    console.log('Is it an array?', Array.isArray(lines));
+    console.log('lines length:', lines.length)
+    for (const elem of lines){
+        console.log('is results an array?', JSON.parse(elem))
+    }
+
+
 }    
 
-results();
+// results();
 
+async function createPineconeVectors (){
+    const embeddingsFromFile = await fs.readFile(path.resolve(__dirname, 'embeddings.json'), 'utf8')
 
+    const arrayOfEmbeddings = JSON.parse(embeddingsFromFile)
+    console.log(Array.isArray(arrayOfEmbeddings))
+    // for (const elem of embeddings){
+    //     console.log('is results an array?', JSON.parse(elem))
+    // }
+
+}
+
+createPineconeVectors()
 
 //function 3:
 //take that output (in whatever form, could be file, could just be big object, file probably better ?) upload to menachem's pinecone
