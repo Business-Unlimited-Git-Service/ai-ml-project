@@ -9,6 +9,8 @@
   
   /* Dark Mode Background */
   body {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     background-color: #1b8ad9;
@@ -18,15 +20,23 @@
     min-height: 100vh;
   }
 
-  .pokemonGeneratorTitle {
+.headerHolder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
     text-align: center;
-    display: inline;
+    margin-bottom: 20px;
+  }
+
+  .pokemonGeneratorTitle {
+    font-size: 5rem;
+    color: #ffde00;
+    background-color: #cc0000;
     padding: 5px 15px;
     border-radius: 15px;
-    background-color: #cc0000;
     font-family: "Press Start 2P", system-ui;
-    font-weight: 5rem;
-    font-style: bold;
+    font-weight: 4rem;
   }
 
   .pokemonGeneratorTitle:hover {
@@ -39,9 +49,38 @@
     font-style: normal;
     cursor: grab;
     padding: 0 5px;
-    
   }
   
+  .headerHolder img {
+    width: 150px;
+    height: 150px;
+    outline: none;
+    rotate: 180;
+    transition: transform 0.3 ease;
+    transform: translateY(-2px);
+  }
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .headerHolder:hover img{
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 10px #ffde00);
+    cursor: grab;
+    padding: 0 5px;
+  }
+
+.headerHolder:hover .pokemonGeneratorTitle {
+  background-color: #3b4cca;
+  color: #ffde00;
+  box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
+  cursor: grab;
+}
+
 .instructions {
   text-align: center;
   display: inline;
@@ -49,21 +88,36 @@
   border-radius: 30px;
   background-color: #3b4cca;
   color: #ffde00;
-  font-family: "Press Start 2P", system-ui;
+  font-size: 3rem;
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
   font-style: normal;
 }
 
+
+.orbitron-Pokemon {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+form {
+  display: flex;
+  flex-direction: center;
+  gap: 60px;
+}
   /* Container Styles */
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #202833;
+    border: 1px solid #3b4cca;
     border-radius: 8px;
-    background: linear-gradient(145deg, #111722, #0c1017);
-    box-shadow: 0 4px 20px rgb(195, 143, 64);
+    background: linear-gradient(145deg, #3b4cca, #ffde00);
+    box-shadow: 0 4px 20px #ffde00;
     overflow: hidden;
-    color: #a8d0e6;
+    color: #3b4cca;
     font-family: "Press Start 2P", system-ui;
     font-weight: 200;
     font-style: normal;
@@ -74,11 +128,12 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 20px;
   }
   
   textarea {
-    background-color: rgb(27, 60, 65);
-    color: rgb(195, 143, 64);
+    background-color: #3b4cca;
+    color: #ffde00;
     border: none;
     border-radius: 5px;
     padding: 15px;
@@ -90,35 +145,34 @@
   }
   
   textarea::placeholder {
-    color: #707b94;
+    color: #3b4cca;
   }
   
   button {
-    display: inline;
+    display: inline-block;
     padding: 5px 15px;
     border-radius: 15px;
-    background-color: #cc0000;
+    background-color: #3b4cca;
     color: #ffde00;
     border: none;
     font-size: 3rem;
     cursor: grabbing;
     transition: transform 0.2s;
-    font-family: "Press Start 2P", system-ui;
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
     font-style: normal;
-    text-align: center;
-    
   }
   
   button:hover {
-    background-color: #3b4cca;
+    display: inline-block;
+    background-color: #cc0000;
     color: #ffde00;
     box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
     transform: translateY(-2px);
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
+    font-size: 3rem;
     cursor: grab;
-    
+    font-size: 3.5rem;
   }
 
   .press-start-2p-regular {
@@ -128,7 +182,7 @@
   }
   
   button:disabled {
-    background-color: #1a263e;
+    background-color: #3b4cca;
     cursor: not-allowed;
   }
   
@@ -144,24 +198,15 @@
   .result {
     margin-top: 30px;
     padding: 15px;
-    background-color: #111722;
-    border-left: 5px solid rgb(4, 140, 148);
+    background-color: #001742;
+    border-left: 5px solid #3b4cca;
     border-radius: 5px;
     font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .result h2 {
-    color: #63a4ff;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
   }
   
   pre {
-    background-color: rgb(27, 60, 65);
-    color: rgb(195, 143, 64);
+    background-color: rgb(1, 0, 53);
+    color: #ffde00;
     padding: 10px;
     border-radius: 5px;
     overflow-x: auto;
@@ -173,7 +218,7 @@
     border-collapse: collapse;
     margin-top: 20px;
     background-color: #10151d;
-    color: #a8d0e6;
+    color: #00025f;
     border: 1px solid #1f2c3e;
     border-radius: 5px;
     overflow: hidden;
@@ -183,19 +228,19 @@
   td {
     padding: 12px 15px;
     text-align: left;
-    border: 1px solid #1f2c3e;
+    border: 1px solid #001e49;
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
   }
   
   th {
-    background-color: #1b2838;
-    color: #d3e7ff;
+    background-color: #001d41;
+    color: #ffde00;
   }
   
   td {
-    background-color: #111722;
+    background-color: #001d41;
   }
   
   /* Responsive Design */
