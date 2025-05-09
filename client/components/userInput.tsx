@@ -61,7 +61,7 @@ const UserInput = () => {
         {output && (
           <div style={{ marginTop: '24px' }}>
             <h2>Here's Your New Pokemon:</h2>
-            <div>{output}</div>
+            <div>{ output }</div>
           </div>
         )}
       </div>
