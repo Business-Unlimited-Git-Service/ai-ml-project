@@ -60,7 +60,7 @@ const UserInput = () => {
         </form> 
               {error && <p className="error">{error}</p>}
               {output && (
-            <div style={{ marginTop: '24px' }}>
+            <div className='result' style={{ marginTop: '24px' }}>
         <h2>Here's Your New Pokemon:</h2>
             <div>{ output }</div>
         </div>

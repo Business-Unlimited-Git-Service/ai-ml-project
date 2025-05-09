@@ -31,9 +31,10 @@ export const queryPineconeDataBase: RequestHandler = async (
     const queryResponse: { matches: ScoredPineconeRecord[] } =
       await index.query({
         vector: embedding,
-        topK: 1,
+        topK: 3,
         includeMetadata: true,
       });
+      console.log(queryResponse.matches)
       res.locals.pineconeQueryResult = queryResponse.matches.map((match) => match.metadata);
 
     next();
