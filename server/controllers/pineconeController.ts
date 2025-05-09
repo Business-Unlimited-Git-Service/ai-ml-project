@@ -25,7 +25,7 @@ export const queryPineconeDataBase: RequestHandler = async (_req, res, next) =>{
         const index = pinecone.index('pokemon');
             const queryResponse = await index.query({
                 vector: embedding,
-                topK: 3,
+                topK: 1,
                 includeMetadata: true
             })
             res.locals.pineconeQueryResult = queryResponse.matches;

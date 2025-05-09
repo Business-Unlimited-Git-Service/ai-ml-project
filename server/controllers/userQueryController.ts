@@ -21,6 +21,7 @@ export const parseUserQuery: RequestHandler = async (
     }
 
     const { userQuery } = req.body;
+    console.log(userQuery)
     
     if(typeof userQuery !== 'string'){
         const error: ServerError ={
