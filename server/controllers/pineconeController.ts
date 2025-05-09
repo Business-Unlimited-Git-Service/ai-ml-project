@@ -1,15 +1,20 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request, NextFunction } from 'express';
+import { CustomResponse } from '../types';
 import { Pinecone, ScoredPineconeRecord } from '@pinecone-database/pinecone';
 import dotenv from 'dotenv'
 
 dotenv.config()
 
-console.log(process.env.PINECONE_API_KEY)
+// console.log(process.env.PINECONE_API_KEY)
 const pinecone = new Pinecone({
-    apiKey: process.env.PINECONE_API_KEY as string
-})
+    apiKey: process.env.PINECONE_API_KEY,
+});
 
-export const queryPineconeDataBase: RequestHandler = async (_req, res, next) =>{
+export const queryPineconeDataBase: RequestHandler = async (
+    req: Request, 
+    res: CustomResponse, 
+    next: NextFunction
+) =>{
     const { embedding } = res.locals;
 
     if (!embedding) {
@@ -23,12 +28,12 @@ export const queryPineconeDataBase: RequestHandler = async (_req, res, next) =>{
 
     try{
         const index = pinecone.index('pokemon');
-            const queryResponse = await index.query({
+            const queryResponse: { matches: ScoredPineconeRecord[] } = await index.query({
                 vector: embedding,
                 topK: 1,
                 includeMetadata: true
             })
-            res.locals.pineconeQueryResult = queryResponse.matches;
+            res.locals.pineconeQueryResult = queryResponse.matches.map(match => match.metadata);
             next();
             return
         }

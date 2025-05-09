@@ -1,4 +1,5 @@
 import express, { Request, Response, RequestHandler, NextFunction} from 'express';
+import { CustomResponse } from '../types';
 import cors from 'cors';
 import 'dotenv/config';
 import { parseUserQuery } from './controllers/userQueryController';
@@ -18,8 +19,12 @@ app.post(
   queryOpenAIEmbedding,
   queryPineconeDataBase,
   queryOpenAIChat, 
-  (_req,res)=>{
-  res.status(200).json({ rec: res.locals.ai })
+  (
+    _req: Request, 
+    res: Response
+  )=>{
+  // res.status(200).json({ rec: res.locals.ai }) 
+  res.status(200).json({ newPokemon: res.locals.newPokemon });
 } )
 
 
