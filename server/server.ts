@@ -5,19 +5,19 @@ import { parseUserQuery } from './controllers/userQueryController';
 import { queryPineconeDataBase } from './controllers/pineconeController';
 import { queryOpenAIEmbedding, queryOpenAIChat } from './controllers/openAIController';
 
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 app.post(
   '/api', 
   parseUserQuery,
-queryOpenAIEmbedding,
-queryPineconeDataBase,
-queryOpenAIChat, 
+  queryOpenAIEmbedding,
+  queryPineconeDataBase,
+  queryOpenAIChat, 
   (_req,res)=>{
   res.status(200).json({ rec: res.locals.ai })
 } )

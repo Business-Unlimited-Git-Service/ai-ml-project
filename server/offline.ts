@@ -1,19 +1,19 @@
-//function 1:
-//get csv file of pokemon pokedex (whichever one)
-//look at that data and make an openaiQuery to make a json file out of that pokemon data using chatgpt 4.1 and chat.responses/chat.completions api
+
 import fs from 'fs/promises';
-import fsNormal from 'fs'
+import fsNormal from 'fs';
 import dotenv from 'dotenv';
 import Openai from 'openai';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Pinecone, PineconeRecord } from '@pinecone-database/pinecone';
 
 dotenv.config();
 
-const client = new Openai({apiKey: process.env.OPENAI_KEY})
+const client = new Openai({ apiKey: process.env.OPENAI_KEY });
 declare const __filename: string;
 declare const __dirname: string;
-
+const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string });
+const index = pc.index('pokemon');
 //! is our prompt below supposed to generate embeddings
 
 const systemPrompt = `
@@ -37,7 +37,7 @@ The format below is the expected format for each line in the JSONL file. assign 
 
 Each custom_id MUST be on its own line. There must not be any / in your response. Ensure that instead of /n the output is actually spaced to the next line.
 Your response must only include the request JSONL object with no other comments or text response.
-`
+`;
 
 /*
 {
@@ -79,59 +79,60 @@ Pros: better Pinecone score for embeddings
 }
 
 */
-   
-
 
 async function getpkmnJSONFile() {
-
-    const pokemons = await fs.readFile(path.resolve(__dirname, 'pokemonsmini.csv'), 'utf-8');
-    const pokemonsArray = pokemons.split('\n');
-    const chunkSize = 100;
-    for (let i = 0; i < pokemonsArray.length; i += chunkSize) {
+  const pokemons = await fs.readFile(
+    path.resolve(__dirname, 'pokemonsmini.csv'),
+    'utf-8'
+  );
+  const pokemonsArray = pokemons.split('\n');
+  const chunkSize = 100;
+  for (let i = 0; i < pokemonsArray.length; i += chunkSize) {
     const chunk = pokemonsArray.slice(i, i + chunkSize).join('\n');
     const gptResponse = await client.responses.create({
-        model: "gpt-4.1",
-        input: [
-            {
-                role: "system",
-                content: `${systemPrompt}`
-            },
-            {
-                role:"user",
-                content: chunk
-            }
-        ],
+      model: 'gpt-4.1',
+      input: [
+        {
+          role: 'system',
+          content: `${systemPrompt}`,
+        },
+        {
+          role: 'user',
+          content: chunk,
+        },
+      ],
     });
     // console.log(gptResponse.output_text)
-    
+
     const dbResponse = {
-        AIResponse: gptResponse.output_text
-      }
-    
+      AIResponse: gptResponse.output_text,
+    };
+
     // await fs.appendFile(path.resolve(__dirname, 'response.json'), JSON.stringify(dbResponse, null, 2) + "\n", "utf-8");
-    await fs.appendFile(path.resolve(__dirname, 'response.jsonl'), dbResponse.AIResponse, "utf-8");
-    }
+    await fs.appendFile(
+      path.resolve(__dirname, 'response.jsonl'),
+      dbResponse.AIResponse,
+      'utf-8'
+    );
+  }
 }
 // getpkmnJSONFile()
 
-
-
-
-//function 2: 
+//function 2:
 //take that json file
 //and make batch query using openai batch api to obtain embeddings (text-embedding-3-small)
 // async function batch
-async function uploadFile(){
-    try {
-        const file = await client.files.create({
-          file: fsNormal.createReadStream("miniresponse.jsonl"),
-          purpose: "batch",
-        });
-        console.log("File uploaded successfully in uploadFile")
-        // console.log("file:", file)
-    } catch (error) {
-        console.error("Embedding error", error);
-    }
+async function uploadFile() {
+  try {
+    const file = await client.files.create({
+      file: fsNormal.createReadStream('miniresponse.jsonl'),
+      purpose: 'batch',
+    });
+    console.log('File uploaded successfully in uploadFile');
+    // console.log("file:", file)
+  } catch (error) {
+    console.error('Embedding error', error);
+  }
 }
 // uploadFile()
 // file: {
@@ -146,19 +147,18 @@ async function uploadFile(){
 //     status_details: null
 //   }
 
-
-async function getEmbeddings(){
-    try {
-        const createBatches = await client.batches.create({
-          input_file_id:'file-QQPWqahEPfmz9mx3kVocnE',
-          endpoint:"/v1/embeddings",
-          completion_window:"24h"
+async function getEmbeddings() {
+  try {
+    const createBatches = await client.batches.create({
+      input_file_id: 'file-QQPWqahEPfmz9mx3kVocnE',
+      endpoint: '/v1/embeddings',
+      completion_window: '24h',
     });
-    console.log(createBatches)
-        console.log("createBatches created successfully")
-    } catch (error) {
-        console.error("Embedding error", error);
-}
+    console.log(createBatches);
+    console.log('createBatches created successfully');
+  } catch (error) {
+    console.error('Embedding error', error);
+  }
 }
 // {
 //     id: 'batch_681d09f25cc08190917b983473edb1be',
@@ -183,66 +183,112 @@ async function getEmbeddings(){
 //     metadata: null
 //   }
 
-    // getEmbeddings()
+// getEmbeddings()
 
-    // const embedding = await openAIClient.embeddings.create({
-    //     model: 'text-embedding-3-small',
-    //     input: `${userQuery}`,
-    //     encoding_format: 'float',
-    //   });
-    //   res.locals.embedding = embedding.data[0].embedding;
+// const embedding = await openAIClient.embeddings.create({
+//     model: 'text-embedding-3-small',
+//     input: `${userQuery}`,
+//     encoding_format: 'float',
+//   });
+//   res.locals.embedding = embedding.data[0].embedding;
 
-    async function getStatus() {
-        const batch = await client.batches.retrieve('batch_681d09f25cc08190917b983473edb1be');
-        // console.log(batch);
-
-    }
+async function getStatus() {
+  const batch = await client.batches.retrieve(
+    'batch_681d09f25cc08190917b983473edb1be'
+  );
+  // console.log(batch);
+}
 
 // getStatus()
 
 const results = async () => {
-    const resultsArray = [];
-    // output file goes as parameter of content('output file')
-    const fileResponse = await client.files.content('file-YEHL8M3heHkFk4f2TgewEg');
-    const fileContents = await fileResponse.text();
-    // console.log('fileContents:', fileContents);
-    const res: any = fileContents 
+  const resultsArray = [];
+  // output file goes as parameter of content('output file')
+  const fileResponse = await client.files.content(
+    'file-YEHL8M3heHkFk4f2TgewEg'
+  );
+  const fileContents = await fileResponse.text();
+  // console.log('fileContents:', fileContents);
+  const res: any = fileContents;
 
-// const test =`{test1:potato}
-// {test2:tomato}
-// {test3:onion}`
+  // const test =`{test1:potato}
+  // {test2:tomato}
+  // {test3:onion}`
 
-    // const embeeding = await fs.readFile(path.resolve(__dirname, 'embeddings.json'), "utf-8");
-        
-    // console.log(Array.isArray(embeeding)); 
+  // const embeeding = await fs.readFile(path.resolve(__dirname, 'embeddings.json'), "utf-8");
 
-    const lines = res.trim().split("\n");
-    // const lines = res.split("\n");
-    
-    await fs.writeFile(path.resolve(__dirname, 'embeddings.json'), JSON.stringify(lines), "utf-8");
-    console.log('Is it an array?', Array.isArray(lines));
-    console.log('lines length:', lines.length)
-    for (const elem of lines){
-        console.log('is results an array?', JSON.parse(elem))
-    }
+  // console.log(Array.isArray(embeeding));
 
+  const lines = res.trim().split('\n');
+  // const lines = res.split("\n");
 
-}    
+  await fs.writeFile(
+    path.resolve(__dirname, 'embeddings.json'),
+    JSON.stringify(lines),
+    'utf-8'
+  );
+  console.log('Is it an array?', Array.isArray(lines));
+  console.log('lines length:', lines.length);
+  for (const elem of lines) {
+    console.log('json file info', JSON.parse(elem));
+  }
+};
 
 // results();
 
-async function createPineconeVectors (){
-    const embeddingsFromFile = await fs.readFile(path.resolve(__dirname, 'embeddings.json'), 'utf8')
+async function createPineconeVectors() {
+  const embeddingsFromFile = await fs.readFile(
+    path.resolve(__dirname, 'embeddings.json'),
+    'utf8'
+  );
 
-    const arrayOfEmbeddings = JSON.parse(embeddingsFromFile)
-    console.log(Array.isArray(arrayOfEmbeddings))
-    // for (const elem of embeddings){
-    //     console.log('is results an array?', JSON.parse(elem))
-    // }
+  const arrayOfopenAIResponses = JSON.parse(embeddingsFromFile);
+//   console.log(Array.isArray(arrayOfopenAIResponses));
+  // for (const elem of embeddings){
+  //     console.log('is results an array?', JSON.parse(elem))
+  // }
+  console.log('is array of open ai an array?', Array.isArray(arrayOfopenAIResponses));
 
+
+  const res =[]
+//   const test = JSON.parse(arrayOfopenAIResponses[0])
+// console.log("this is array[0]", JSON.parse(arrayOfopenAIResponses[0]))
+// console.log('custom id', test.custom_id)
+// console.log("The whole ass array", arrayOfopenAIResponses)
+// console.log("how long dis array is?", arrayOfopenAIResponses.length)
+  for (const pkmn of arrayOfopenAIResponses){ //make new objects for each pkmn, containing id = custom_id, values of embeddings
+    const usablePKMN = JSON.parse(pkmn)
+    res.push({
+        id: usablePKMN.custom_id,
+        values: usablePKMN.response.body.data[0].embedding,
+        metadata: {
+            name: usablePKMN.id,
+        }
+    });
+  }
+//   console.log(res)
+
+  index.upsert(res);
+  console.log("we finished upsert")
 }
 
-createPineconeVectors()
+createPineconeVectors();
+
+// [{
+// "id": "batch_req_681d09facaf08190beb150c3b6285890", 
+// "custom_id": "Bulbasaur", 
+// "response":           
+//      {"status_code": 200, 
+//        "request_id": "f1bc425348d7623c45efbb79fc542ee7", 
+//              "body": 
+//          {"object": "list", 
+//             "data": 
+//                  [{"object": "embedding", 
+//                     "index": 0, 
+//                 "embedding": [0.034074, -0.016989278, 0.043165173, 0.030828858, -0.024720354, 0.0038237807, 0.053831194, -0.011608545, 0.0052465135, -0.002656066, -0.014459975, 0.010886739, -0.03121064, -0.015843933, 0.010039661]
+
+
+
 
 //function 3:
 //take that output (in whatever form, could be file, could just be big object, file probably better ?) upload to menachem's pinecone
