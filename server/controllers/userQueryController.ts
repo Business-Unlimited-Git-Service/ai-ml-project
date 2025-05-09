@@ -1,16 +1,11 @@
-import { Request, RequestHandler } from 'express';
+import { Request, NextFunction, RequestHandler } from 'express';
+import { CustomResponse, ServerError } from '../types';
 
-
-interface ServerError {
-    log: string;
-    status: number;
-    message: { err: string };
-}
 
 export const parseUserQuery: RequestHandler = async ( 
-    req: Request<unknown, unknown, Record<string, unknown>>,
-    res, 
-    next
+    req: Request,
+    res: CustomResponse, 
+    next: NextFunction
  ) => {
         if (!req.body.userQuery) {
         return next({

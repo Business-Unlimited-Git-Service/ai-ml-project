@@ -25,7 +25,7 @@ const UserInput = () => {
           const response = await fetch('/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userQuery }),
+            body: JSON.stringify({ userQuery }), // <----
           });
     
           if (response.status !== 200) {
@@ -33,10 +33,11 @@ const UserInput = () => {
             setError(parsedError.err);
           } else {
             const parsedResponse: ParsedResponse = await response.json();
+            // parsedResponse.newPokemon was never defined because it expects a JSON file
             setOutput(parsedResponse.newPokemon);
           }
         } catch (error) {
-          setError(error as string);
+          setError((error as Error).message || 'Your Pokemon died upon creation... It was an abomination. It spat in the face of God and chose not to exist.');
         } finally {
           setLoading(false);
         }
@@ -51,20 +52,20 @@ const UserInput = () => {
               value={userQuery}
               onChange={(e) => setUserQuery(e.target.value)}
               placeholder="What form does your pokemon take?"
-              style={{ width: '100%', padding: '8px', marginTop: '8px' }}
+              style={{ width: '300px', padding: '8px', marginTop: '8px' }}
             />
-          <button type="submit" style={{ marginTop: '16px' }} disabled={loading}>
-            {loading ? 'Loading...' : 'Get Pokemon'}
-          </button>
-        </form>
-        {error && <p className="error">{error}</p>}
-        {output && (
-          <div style={{ marginTop: '24px' }}>
-            <h2>Here's Your New Pokemon:</h2>
+              <button type="submit" style={{ marginTop: '16px' }} disabled={loading}>
+                  {loading ? 'Loading...' : 'Get Pokemon'}
+              </button>
+        </form> 
+              {error && <p className="error">{error}</p>}
+              {output && (
+            <div style={{ marginTop: '24px' }}>
+        <h2>Here's Your New Pokemon:</h2>
             <div>{ output }</div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
+        </div>
     )
 
 }
