@@ -11,8 +11,9 @@ export interface CustomLocals {
   embedding?: number[];
   newPokemon?: string;
   userQuery?: string;
-  pineconeQueryResult?: string;
+  pineconeQueryResult?: any;
 }
+//to discuss
 
 export interface ServerError {
     log: string;
