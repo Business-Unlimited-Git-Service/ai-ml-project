@@ -125,11 +125,11 @@ async function getpkmnJSONFile() {
 async function uploadFile() {
   try {
     const file = await client.files.create({
-      file: fsNormal.createReadStream('miniresponse.jsonl'),
+      file: fsNormal.createReadStream('fileforEmbeddings.jsonl'),
       purpose: 'batch',
     });
     console.log('File uploaded successfully in uploadFile');
-    // console.log("file:", file)
+    console.log("file:", file)
   } catch (error) {
     console.error('Embedding error', error);
   }
@@ -150,7 +150,7 @@ async function uploadFile() {
 async function getEmbeddings() {
   try {
     const createBatches = await client.batches.create({
-      input_file_id: 'file-QQPWqahEPfmz9mx3kVocnE',
+      input_file_id: 'file-RtSYRbxp3VtFMnSaxGtTTZ',
       endpoint: '/v1/embeddings',
       completion_window: '24h',
     });
@@ -194,9 +194,9 @@ async function getEmbeddings() {
 
 async function getStatus() {
   const batch = await client.batches.retrieve(
-    'batch_681d09f25cc08190917b983473edb1be'
+    'batch_681e168210ac819096c8036e2f40634c'
   );
-  // console.log(batch);
+  console.log(batch);
 }
 
 // getStatus()
@@ -205,7 +205,7 @@ const results = async () => {
   const resultsArray = [];
   // output file goes as parameter of content('output file')
   const fileResponse = await client.files.content(
-    'file-YEHL8M3heHkFk4f2TgewEg'
+    'file-3W6z8gNd2TFhHNgSJfQooQ'
   );
   const fileContents = await fileResponse.text();
   // console.log('fileContents:', fileContents);
