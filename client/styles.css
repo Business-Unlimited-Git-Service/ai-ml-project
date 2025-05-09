@@ -6,73 +6,73 @@
     font-family: "Press Start 2P", system-ui;
 
   } */
-  
-  /* Dark Mode Background */
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: #1b8ad9;
-    color: #ffde00;
-    line-height: 2;
-    padding: 20px;
-    min-height: 100vh;
-  }
 
-.headerHolder{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
+/* Dark Mode Background */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #1b8ad9;
+  color: #ffde00;
+  line-height: 2;
+  padding: 20px;
+  min-height: 100vh;
+}
 
-  .pokemonGeneratorTitle {
-    font-size: 5rem;
-    color: #ffde00;
-    background-color: #cc0000;
-    padding: 5px 15px;
-    border-radius: 15px;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 4rem;
-  }
+.headerHolder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .pokemonGeneratorTitle:hover {
-    background-color: #3b4cca;
-    color: #ffde00;
-    box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
-    transform: translateY(-2px);
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    cursor: grab;
-    padding: 0 5px;
+.pokemonGeneratorTitle {
+  font-size: 5rem;
+  color: #ffde00;
+  background-color: #cc0000;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: 4rem;
+}
+
+.pokemonGeneratorTitle:hover {
+  background-color: #3b4cca;
+  color: #ffde00;
+  box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
+  transform: translateY(-2px);
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: 400;
+  font-style: normal;
+  cursor: grab;
+  padding: 0 5px;
+}
+
+.headerHolder img {
+  width: 150px;
+  height: 150px;
+  outline: none;
+  rotate: 180;
+  transition: transform 0.3 ease;
+  transform: translateY(-2px);
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .headerHolder img {
-    width: 150px;
-    height: 150px;
-    outline: none;
-    rotate: 180;
-    transition: transform 0.3 ease;
-    transform: translateY(-2px);
+  100% {
+    transform: rotate(360deg);
   }
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  .headerHolder:hover img{
-    animation: rotate 1s linear infinite;
-    filter: drop-shadow(0 0 10px #ffde00);
-    cursor: grab;
-    padding: 0 5px;
-  }
+}
+.headerHolder:hover img {
+  animation: rotate 3s linear infinite;
+  filter: drop-shadow(0 0 10px #ffde00);
+  cursor: grab;
+  padding: 0 5px;
+}
 
 .headerHolder:hover .pokemonGeneratorTitle {
   background-color: #3b4cca;
@@ -89,15 +89,14 @@
   background-color: #3b4cca;
   color: #ffde00;
   font-size: 3rem;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
 }
 
-
 .orbitron-Pokemon {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -107,180 +106,186 @@ form {
   flex-direction: center;
   gap: 60px;
 }
-  /* Container Styles */
+/* Container Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #3b4cca;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #3b4cca, #ffde00);
+  box-shadow: 0 4px 20px #ffde00;
+  overflow: hidden;
+  color: #3b4cca;
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+textarea {
+  background-color: #3b4cca;
+  color: #ffde00;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+  font-family: 'Press Start 2P', system-ui;
+  font-style: normal;
+}
+
+textarea::placeholder {
+  color: #3b4cca;
+}
+
+button {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 15px;
+  background-color: #3b4cca;
+  color: #ffde00;
+  border: none;
+  font-size: 3rem;
+  cursor: grabbing;
+  transition: transform 0.2s;
+  font-family: 'Orbitron', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+button:hover {
+  display: inline-block;
+  background-color: #cc0000;
+  color: #ffde00;
+  box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
+  transform: translateY(-2px);
+  font-size: 3rem;
+  cursor: grab;
+  font-size: 3.5rem;
+}
+
+.press-start-2p-regular {
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+button:disabled {
+  background-color: #3b4cca;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.error {
+  color: #ff0000;
+  font-weight: bold;
+  margin-top: 10px;
+  font-family: 'Press Start 2P', system-ui;
+}
+
+/* Result Section */
+.result {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #001742;
+  border-left: 5px solid #3b4cca;
+  border-radius: 5px;
+  font-family: 'Press Start 2P', system-ui;
+}
+
+pre {
+  background-color: rgb(1, 0, 53);
+  color: #ffde00;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #10151d;
+  color: #00025f;
+  border: 1px solid #1f2c3e;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #001e49;
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+th {
+  background-color: #001d41;
+  color: #ffde00;
+}
+
+td {
+  background-color: #001d41;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #3b4cca;
-    border-radius: 8px;
-    background: linear-gradient(145deg, #3b4cca, #ffde00);
-    box-shadow: 0 4px 20px #ffde00;
-    overflow: hidden;
-    color: #3b4cca;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 200;
-    font-style: normal;
-  }
-  
-  /* Form Styles */
-  form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  textarea {
-    background-color: #3b4cca;
-    color: #ffde00;
-    border: none;
-    border-radius: 5px;
     padding: 15px;
-    font-size: 1rem;
-    resize: vertical;
-    outline: none;
-    font-family: "Press Start 2P", system-ui;
-    font-style: normal;
-  }
-  
-  textarea::placeholder {
-    color: #3b4cca;
-  }
-  
-  button {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 15px;
-    background-color: #3b4cca;
-    color: #ffde00;
-    border: none;
-    font-size: 3rem;
-    cursor: grabbing;
-    transition: transform 0.2s;
-    font-family: "Orbitron", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 800;
-    font-style: normal;
-  }
-  
-  button:hover {
-    display: inline-block;
-    background-color: #cc0000;
-    color: #ffde00;
-    box-shadow: 0 0 10px #ffde00, 0 0 20px #b3a125;
-    transform: translateY(-2px);
-    font-size: 3rem;
-    cursor: grab;
-    font-size: 3.5rem;
   }
 
-  .press-start-2p-regular {
-    font-family: "Press Start 2P", system-ui;
+  form {
+    gap: 15px;
+  }
+
+  textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+    font-family: 'Press Start 2P', system-ui;
     font-weight: 400;
     font-style: normal;
   }
-  
-  button:disabled {
-    background-color: #3b4cca;
-    cursor: not-allowed;
+
+  button {
+    font-size: 0.9rem;
+    padding: 10px 15px;
   }
-  
-  /* Error Message */
-  .error {
-    color: #ff0000;
-    font-weight: bold;
-    margin-top: 10px;
-    font-family: "Press Start 2P", system-ui;
-  }
-  
-  /* Result Section */
-  .result {
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #001742;
-    border-left: 5px solid #3b4cca;
-    border-radius: 5px;
-    font-family: "Press Start 2P", system-ui;
-  }
-  
-  pre {
-    background-color: rgb(1, 0, 53);
-    color: #ffde00;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
-  
-  /* Table Styles */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #10151d;
-    color: #00025f;
-    border: 1px solid #1f2c3e;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
+
   th,
   td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #001e49;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
+    padding: 10px 12px;
   }
-  
-  th {
-    background-color: #001d41;
-    color: #ffde00;
-  }
-  
-  td {
-    background-color: #001d41;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .container {
-      padding: 15px;
-    }
-  
-    form {
-      gap: 15px;
-    }
-  
-    textarea {
-      font-size: 0.9rem;
-      padding: 10px;
-      font-family: "Press Start 2P", system-ui;
-      font-weight: 400;
-      font-style: normal;
-    }
-  
-    button {
-      font-size: 0.9rem;
-      padding: 10px 15px;
-    }
-  
-    th,
-    td {
-      padding: 10px 12px;
-    }
-  }
-  
-  .result {
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #001742;
-    border-left: 5px solid #3b4cca;
-    border-radius: 5px;
-    font-family: "Orbitron", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 800;
-    font-style: normal;
-    font-size: 1.5rem;
-  }
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #7b0303;
+  border-left: 5px solid #3b4cca;
+  border-radius: 5px;
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-size: 2.2rem;
+}
+
+.jersey-10-regular {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
